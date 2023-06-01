@@ -23,6 +23,13 @@ function Header() {
                         <li className="nav-item">
                             <Link to="/about" className="nav-link">About</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link to="/blogs" className="nav-link">Blogs</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/myComponent" className="nav-link">My Component</Link>
+                        </li>
+
                     </ul>
                 </div>
             </nav>

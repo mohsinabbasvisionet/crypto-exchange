@@ -7,7 +7,9 @@ import About from "./Components/About"
 import Header from './Components/Header'
 import "./App.css"
 import React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import MyComponent from "./Components/MyComponent";
+import Blogs from "./Components/Blogs";
 
 
 function App() {
@@ -29,12 +31,18 @@ function App() {
    return (
     <div>
       <Router>
-        <Header />
+        <Header/>
         <div>
+            <switch>
             <Route exact path="/login" render={() => <Login users={users} />} />
             <Route path="/success" render={() => <Success users={users} setIsLoggedIn={setIsLoggedIn}  />} />
             <Route path="/about" render={() => <About/>} />
             <Route path="/signup" render={() => <Signup users={users} addUser={setUsers} setIsLoggedIn={setIsLoggedIn} />}  />
+
+            {/*Assignment - 2*/}
+            <Route path="/myComponent" render={() => <MyComponent color={"yellow"}/>}  />
+            <Route path="/blogs" render={() => <Blogs users={users} />}  />
+            </switch>
         </div>
        </Router>
     </div>
