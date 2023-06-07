@@ -10,6 +10,8 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import MyComponent from "./Components/MyComponent";
 import Blogs from "./Components/Blogs";
+import Main from "./Components/Main";
+import MainRedux from "./Components/MainRedux";
 
 
 function App() {
@@ -31,9 +33,9 @@ function App() {
    return (
     <div>
       <Router>
-        <Header/>
+        <Header />
         <div>
-            <switch>
+
             <Route exact path="/login" render={() => <Login users={users} />} />
             <Route path="/success" render={() => <Success users={users} setIsLoggedIn={setIsLoggedIn}  />} />
             <Route path="/about" render={() => <About/>} />
@@ -42,7 +44,10 @@ function App() {
             {/*Assignment - 2*/}
             <Route path="/myComponent" render={() => <MyComponent color={"yellow"}/>}  />
             <Route path="/blogs" render={() => <Blogs users={users} />}  />
-            </switch>
+
+             {/*Assignment - 3*/}
+             <Route path="/main" render={() => <Main users={users}/>} />
+             <Route path="/main-redux" render={() => <MainRedux users={users}/>} />
         </div>
        </Router>
     </div>

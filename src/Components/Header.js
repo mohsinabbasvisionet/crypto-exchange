@@ -29,6 +29,12 @@ function Header() {
                         <li className="nav-item">
                             <Link to="/myComponent" className="nav-link">My Component</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link to="/main" className="nav-link">Main</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/main-redux" className="nav-link">Main Redux</Link>
+                        </li>
 
                     </ul>
                 </div>
