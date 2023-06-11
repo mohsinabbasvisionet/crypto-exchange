@@ -14,9 +14,10 @@ import Main from "./Components/Main";
 import MainRedux from "./Components/MainRedux";
 import CoinInfoPage from "./Components/CoinInfoPage";
 import store from "./redux/store";
-import {Provider, useDispatch} from "react-redux";
+import {Provider, useDispatch, useSelector} from "react-redux";
 import Coins from "./Components/Coins";
 import TransferPage from "./Components/TransferPage"
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 
 function App() {
@@ -69,46 +70,65 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
 
-    const [loggedInUser, setLoggedInUser] = React.useState('Initial value');
+  const [loggedInUser, setLoggedInUser] = React.useState(false);
+  const [isAuthenticated, setIsAuthenticatedUser] = React.useState(false);
 
-    const updateValue = (newValue) => {
+  const updateValue = (newValue) => {
         setLoggedInUser(newValue);
     };
+
+    const reduxCurrentUser = useSelector((state) => {
+        return state.transferCoinsReducer.currentUser
+    });
+
+    React.useEffect(() => {
+        if (reduxCurrentUser != null) {
+            setIsAuthenticatedUser(true);
+        } else {
+            setIsAuthenticatedUser(false);
+        }
+        console.log(isAuthenticated);
+    }, []);
 
 
     return (
     <div>
-        <Provider store={store}>
-            <Router>
-        <Header />
-        <div>
+         <Router>
+            <Header />
+            <div>
 
-            <Route exact path="/login" render={() => <Login users={users}  updateValue={updateValue} />} />
-            <Route path="/success" render={() => <Success  loggedInUser={loggedInUser} updateValue={updateValue} />} />
-            <Route path="/about" render={() => <About/>} />
-            <Route path="/signup" render={() => <Signup users={users} addUser={setUsers} setIsLoggedIn={setIsLoggedIn} />}  />
+                <Route exact path="/login" render={() => <Login users={users}  updateValue={updateValue} />} />
+                <Route path="/success"
+                                render={() => <Success  loggedInUser={loggedInUser} updateValue={updateValue} />} />
+                <Route path="/about" render={() => <About/>} />
+                <Route path="/signup" render={() => <Signup users={users} addUser={setUsers} setIsLoggedIn={setIsLoggedIn} />}  />
 
-            {/*Assignment - 2*/}
-            <Route path="/myComponent" render={() => <MyComponent color={"yellow"}/>}  />
-            <Route path="/blogs" render={() => <Blogs users={users} />}  />
+                {/*Assignment - 2*/}
+                <Route path="/myComponent" render={() => <MyComponent color={"yellow"}/>}  />
+                <Route path="/blogs" render={() => <Blogs users={users} />}  />
 
-             {/*Assignment - 3*/}
-             {/*<Route path="/main" render={() => <Main users={users}/>} />
-             <Route path="/main-redux" render={() => <MainRedux users={users}/>} />*/}
+                 {/*Assignment - 3*/}
+                 {/*<Route path="/main" render={() => <Main users={users}/>} />
+                 <Route path="/main-redux" render={() => <MainRedux users={users}/>} />*/}
 
-            <Route path="/coin-info" render={() => <CoinInfoPage />} />
-            <Route path="/coins" render={() => <Coins loggedInUser={loggedInUser}/>} />
-            {/*<Route path="/transfer/:coinSymbol" render={() => <TransferPage currentUser={loggedInUser} users={users}/>} />*/}
+                <ProtectedRoute isAuthenticated={isAuthenticated}
+                                flashMessage="You need to log in to access this page."
+                                path="/coin-info" render={() => <CoinInfoPage />} />
+                <ProtectedRoute isAuthenticated={isAuthenticated}
+                                flashMessage="You need to log in to access this page."
+                                path="/coins" render={() => <Coins loggedInUser={loggedInUser}/>} />
+                {/*<Route path="/transfer/:coinSymbol" render={() => <TransferPage currentUser={loggedInUser} users={users}/>} />*/}
 
-            <Route
-                path="/transfer/:coinSymbol"
-                render={(props) => (
-                    <TransferPage {...props}/>
-                )}
-            />
-        </div>
+                <ProtectedRoute
+                    isAuthenticated={isAuthenticated}
+                    flashMessage="You need to log in to access this page."
+                    path="/transfer/:coinSymbol"
+                    render={(props) => (
+                        <TransferPage {...props}/>
+                    )}
+                />
+            </div>
        </Router>
-        </Provider>
     </div>
   );
 }

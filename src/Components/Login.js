@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import { Link,useHistory } from 'react-router-dom';
+import {Link, useHistory, useLocation} from 'react-router-dom';
 import {useDispatch} from "react-redux";
 import {currentUserAction} from "../redux/actions/transferCoins";
+import FlashMessage from "./FlashMessage";
 
 function Login({users, updateValue}) {
 
@@ -26,7 +27,6 @@ function Login({users, updateValue}) {
     }, []);*/
 
     const redirectBack = useHistory();
-
 
     /*const emailExists = (email) => {
         for (let i = 0; i < users.length; i++) {
@@ -73,9 +73,12 @@ function Login({users, updateValue}) {
 
     };
 
+    const location = useLocation();
+    const flashMessage = location.state && location.state.flashMessage;
 
     return (
         <div>
+            {flashMessage && <FlashMessage message={flashMessage} />}
             <div className="container">
                 <h2>Login Page</h2>
                 {error && <div className="alert alert-danger" role="alert">{error}</div>}
