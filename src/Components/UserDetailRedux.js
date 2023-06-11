@@ -12,7 +12,7 @@ export default function UserDetailRedux ({ user }){
             <p>{user.id}</p>
             <p>{user.name}</p>
             <p>{user.website}</p>
-            { selectedUser.id == user.id && (
+            { selectedUser.id === user.id && (
                 <button style={{backgroundColor:'grey'}}>Edit</button>
             )}
 

@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from 'react'
 import { Link,useHistory } from 'react-router-dom';
+import {useDispatch} from "react-redux";
+import {currentUserAction} from "../redux/actions/transferCoins";
 
-function Login({users}) {
+function Login({users, updateValue}) {
 
-    const [email, setEmail] = useState("abc@xyz.com");
-    const [password, setPassword] = useState("password");
+    const [email, setEmail] = useState("mohsin@example.com");
+    const [password, setPassword] = useState("mohsin123");
     const [error, setError] = useState("");
     const [attempts, setAttempts] = useState(0);
     const maxAttempts = 3;
+    const dispatch = useDispatch();
 
     const blockUser = () => {
         setError('Too many failed login attempts. User blocked.');
@@ -15,12 +18,12 @@ function Login({users}) {
     };
 
     //just using the effect function
-    useEffect(() =>{
+    /*useEffect(() =>{
        setTimeout(() =>{
            setEmail( "");
            setPassword( "");
        }, 2000)
-    }, []);
+    }, []);*/
 
     const redirectBack = useHistory();
 
@@ -48,15 +51,17 @@ function Login({users}) {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Now filter email and password from Users list:
-        const emailCheck = users.find(user => user.email === email);
-        const passwordCheck = users.find(user => user.password === password);
-
+        const userCheck = users.find(user => user.email === email && user.password === password);
+        //const passwordCheck = users.find(user => user.password === password);
         //const emailCheck = emailExists(email);
         //const passwordCheck = passwordExists(password);
 
-        if (emailCheck && passwordCheck) {
+        if (userCheck !== false) {
             setError('');
             setAttempts(0);
+            //store value in redux state
+            dispatch(currentUserAction(userCheck, users));
+            updateValue(userCheck);
             redirectBack.push('/success')
         } else {
             setError('Email not found. Please try again.');
@@ -65,7 +70,6 @@ function Login({users}) {
                 blockUser();
             }
         }
-
 
     };
 

@@ -26,7 +26,7 @@ function Header() {
                         <li className="nav-item">
                             <Link to="/blogs" className="nav-link">Blogs</Link>
                         </li>
-                        <li className="nav-item">
+                        {/*<li className="nav-item">
                             <Link to="/myComponent" className="nav-link">My Component</Link>
                         </li>
                         <li className="nav-item">
@@ -34,7 +34,16 @@ function Header() {
                         </li>
                         <li className="nav-item">
                             <Link to="/main-redux" className="nav-link">Main Redux</Link>
+                        </li>*/}
+
+                        <li className="nav-item">
+                            <Link to="/coin-info" className="nav-link">Coin Live Rates</Link>
                         </li>
+
+                        <li className="nav-item">
+                            <Link to="/coins" className="nav-link">User Coins</Link>
+                        </li>
+
 
                     </ul>
                 </div>

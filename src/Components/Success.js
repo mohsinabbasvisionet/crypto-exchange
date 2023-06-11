@@ -1,19 +1,18 @@
 import React from 'react'
 import Signup from "./Signup";
+import {useSelector} from "react-redux";
 
-function Success({users, setIsLoggedIn}) {
+function Success({updateValue, loggedInUser}) {
 
     const handleLogout = () => {
-        setIsLoggedIn(false); // Set login status to false on logout
-        console.log(setIsLoggedIn);
+        updateValue(false); // Set login status to false on logout
     };
 
    return (
     <div>
-        <div className="alert alert-success" role="alert"> User logged in Successfully </div>
-
-        {setIsLoggedIn ? (
+        {loggedInUser ? (
             <div>
+                <div className="alert alert-success" role="alert"> User {loggedInUser.email} logged in Successfully </div>
                 <h2>Welcome User!</h2>
                 <button onClick={handleLogout}>Logout</button>
             </div>
